@@ -1,12 +1,10 @@
 Changes
-MANIFEST
-Makefile.PL
-README
 lib/Exporter/Simple.pm
-t/testlib/MyExport.pm
+Makefile.PL
+MANIFEST
+README
 t/01general.t
 t/02nolist.t
 t/03all.t
 t/04greet.t
-t/05lex.t
-t/06globals.t
+t/testlib/MyExport.pm

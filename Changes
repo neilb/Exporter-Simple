@@ -1,5 +1,23 @@
 Revision history for Perl extension Exporter::Simple.
 
+1.00  Sat Aug 31 18:38:27 CEST 2002
+	- TOTAL rewrite. Now that perl 5.8.0 is out, we have attributes
+	  on 'our' variables. This means we don't have to clumsily export
+	  globals, nor do we need to export lexicals (which was a weird
+	  concept anyway). So there's no need for Filter::Simple and
+	  PadWalker or any of the ugly workarounds that introduced. And
+	  once it occurred to me that Exporter::Simple could just subclass
+	  Exporter, and modules wanting to use Exporter::Simple could
+	  subclass it, things were a lot easier. Now using the attributes
+	  will populate the exporting package's @EXPORT, @EXPORT_OK
+	  and %EXPORT_TAGS direcltly, and we let Exporter have its way
+	  (with a few slight modifications).
+
+	  It's beautiful. And more proof of the old adage "if it's too
+	  complicated, there's probably something wrong with it" - when
+	  it's right, it's rather simple and elegant and things easily
+	  fall into place.
+
 0.13  Fri Mar 15 22:42:16 CET 2002
 	- Incorporated two patches sent by Richard Clamp in response
 	  to bug reports by Mark Fowler (thanks guys). First, Makefile.PL

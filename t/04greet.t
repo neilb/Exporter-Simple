@@ -2,12 +2,10 @@
 
 use warnings;
 use strict;
-use lib qw(lib ./t/testlib);
-use Test;
-
-BEGIN { plan tests => 2 }
+use lib 't/testlib';
+use Test::More tests => 2;
 
 use MyExport qw(:greet);
 
-ok(hello(), 'hello there');
-ok(hi(),    'hi there');
+is(hello(), MyExport::hello(), 'exported sub hello()');
+is(hi(),    MyExport::hi(),    'exported sub hi()');

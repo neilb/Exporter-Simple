@@ -2,13 +2,10 @@
 
 use warnings;
 use strict;
-use lib qw(lib ./t/testlib);
-use Test;
+use lib 't/testlib';
+use Test::More tests => 2;
 
-BEGIN { plan tests => 2 }
-
-# Trying the ':all' tag.
 use MyExport qw(:all :DEFAULT);
 
-ok(hello(), 'hello there');
-ok(askme(), 'what you will');
+is(hello(), MyExport::hello(), 'exported sub hello()');
+is(askme(), MyExport::askme(), 'exported sub askme()');

@@ -2,13 +2,14 @@
 
 use warnings;
 use strict;
-use lib qw(lib ./t/testlib);
-use Test;
-
-BEGIN { plan tests => 2 }
+use lib 't/testlib';
+use Test::More tests => 4;
 
 # only using default imports
 use MyExport;
 
-ok(hello(), 'hello there');
-ok(been_to_import(), 'been');
+our ($foo, %baz);
+is($foo, 42, 'exported scalar');
+is(hello(), MyExport::hello(), 'exported sub hello()');
+is_deeply(\%baz, { a => 65, b => 66 }, 'exported hash');
+is($Exporter::ExportLevel, 0, 'ExportLevel properly localized');
