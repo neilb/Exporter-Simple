@@ -5,9 +5,9 @@ SYNOPSIS
       package MyExport;
       use base 'Exporter::Simple';
 
-      my @bar : Exportable(vars) = (2, 3, 5, 7);
-      my $foo : Exported(vars)   = 42;
-      my %baz : Exported         = (a => 65, b => 66);
+      our @bar : Exportable(vars) = (2, 3, 5, 7);
+      our $foo : Exported(vars)   = 42;
+      our %baz : Exported         = (a => 65, b => 66);
 
       sub hello : Exported(greet,uk)   { "hello there" }
       sub askme : Exportable           { "what you will" }
@@ -62,7 +62,7 @@ AVAILABILITY
     <http://www.perl.com/CPAN/authors/id/M/MA/MARCEL/>.
 
 VERSION
-    This document describes version 1.00 of "Exporter::Simple".
+    This document describes version 1.10 of "Exporter::Simple".
 
 AUTHOR
     Marcel Grünauer <marcel@cpan.org>

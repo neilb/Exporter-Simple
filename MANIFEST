@@ -1,8 +1,8 @@
 Changes
-lib/Exporter/Simple.pm
+MANIFEST			This list of files
 Makefile.PL
-MANIFEST
 README
+lib/Exporter/Simple.pm
 t/01general.t
 t/02nolist.t
 t/03all.t
