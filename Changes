@@ -1,0 +1,26 @@
+Revision history for Perl extension Exporter::Simple.
+
+0.12  Tue Jul  3 13:07:30 CEST 2001
+	- Changed source filter to insert lexical-inspecting code
+	  at the end of the calling module
+	- Added documentation effectively saying 'our attributes
+	  will be in 5.8.0, so we're not doing any fancy workarounds
+	  here'
+
+0.11  Thu Jun  7 14:00:35 2001
+	- Added source filter to rename custom import() routine,
+	  so no special name is necessary
+
+0.10  Tue Jun  6 18:37:20 2001
+	- Added exportable lexicals and support for a custom _import
+	  routine. Also export() and exportable() to manually export
+	  globals (as they can't take attributes).
+
+0.02  Wed May 30 13:53:50 2001
+	- Added tests, documentation. Renamed 'Export' to 'Exported'
+	  and 'ExportOk' to 'Exportable' (Damian's idea)
+
+0.01  Wed May 23 12:57:49 2001
+	- original version; created by h2xs 1.20 with options
+		-XAn Exporter::Simple
+

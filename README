@@ -1,0 +1,128 @@
+NAME
+    Exporter::Simple - Easier set-up of module exports
+
+SYNOPSIS
+      package MyExport;
+      use Exporter::Simple;
+
+      my @bar : Exportable(vars) = (2, 3, 5, 7);
+      my $foo : Exported(vars)   = 42;
+      my %baz : Exported         = (a => 65, b => 66);
+
+      sub hello : Exported(greet,uk)   { "hello there" }
+      sub askme : Exportable           { "what you will" }
+      sub hi    : Exportable(greet,us) { "hi there" }
+
+      # meanwhile, in a module far, far away
+      use MyExport qw(:greet);
+      print hello();
+      $baz{c} = 67;
+
+DESCRIPTION
+    This module, when used by a package, allows that package to define
+    exports in a more concise way than using `Exporter'. Instead of having
+    to worry what goes in `@EXPORT', `@EXPORT_OK' and `%EXPORT_TAGS', you
+    can use two attributes to define exporter behavior. This has two
+    advantages: It frees you from the implementation details of `Exporter',
+    and it keeps the export definitions where they belong, with the
+    subroutines and variables.
+
+    The attributes provided by this module are:
+
+    `Exported'
+        Indicates that the associated subroutine or lexical variable should
+        be automatically exported. It will also go into the `:all' tag (per
+        the rules of `%EXPORT_TAGS'), as well as any tags you specify as
+        options of this attribute.
+
+        For example, the following declaration
+
+          sub hello : Exported(greet,uk)   { ... }
+
+        will cause `hello()' to be exported, but also be available in the
+        tags `:all', `:greet' and `:uk'.
+
+    `Exportable'
+        Is like `Exported', except that the associated subroutine or lexical
+        variable won't be automatically exported. It will still go to the
+        `:all' tag in any case and all other tags specified as attribute
+        options.
+
+Exporting Lexical Variables
+    `Exporter::Simple' allows you to export lexical variables; something
+    `Exporter' can't do. What happens is that the lexical is aliased to a
+    global of the same name, which is then exported. So when you manipulate
+    that global, you're really manipulating the lexical.
+
+    The syntax for exporting lexical variables is the same as for
+    subroutines as lexicals can take attributes just as subroutines do.
+
+    `Exporter::Simple' expects some cooperation from you when exporting
+    lexicals. For reasons best explained by reading the (commented) source,
+    you need to make sure to have
+
+      1;
+
+    as the last line of code in your module. This is the true value you have
+    to return from the module anyway.
+
+Exporting Global Variables
+    Global variables can't take attributes as of Perl 5.6.0, so it's
+    necessary to export globals manually. This needs to happen during
+    `BEGIN()' though, so you need to write code like this:
+
+      BEGIN {
+        export([ qw/EXPORTED_CONST @array $friend/ ], 'globals');
+        exportable('EXPORTABLE_CONST', 'globals');
+      }
+
+    Urgh.
+
+    However, globals will be able to take attributes in Perl 5.8.0, and this
+    module will then be updated to reflect those capabilities.
+
+    The two subroutines used to export globals are:
+
+    `export($symbols, $tags)'
+        As shown in the example above, both arguments can be either strings
+        (to indicate one symbol or tag) or array references to indicate
+        multiple symbols or tags.
+
+        The semantics are the same as for the `Export' attribute above.
+
+    `exportable($symbols, $tags)'
+        As `export()', but does not automatically export the symbols. The
+        semantics are the same as for the `Exportable' attribute above.
+
+    These two subroutines are automatically exported by `Exporter::Simple'.
+    The reason for this brute-force export is that these subroutines need to
+    be used during BEGIN, but `Exporter::Simple' doesn't have a chance to
+    use `Exporter' to export those two subroutines yet. Sigh.
+
+TODO
+    reflection
+        Retrieve information about exports
+
+    test using two exporting modules
+        To see whether `Exporter::Simple' is ok with more than one module
+        using it. (I don't know why it shouldn't be, but that's what testing
+        is for).
+
+BUGS
+    If you find any bugs or oddities, please do inform the author.
+
+AUTHOR
+    Marcel Grunauer, <marcel@codewerk.com>
+
+CONTRIBUTORS
+    Damian Conway <damian@conway.org>
+
+COPYRIGHT
+    Copyright 2001 Marcel Grunauer. All rights reserved.
+
+    This library is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
+SEE ALSO
+    perl(1), Attribute::Handlers(3pm), Exporter(3pm).
+
