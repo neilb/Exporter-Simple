@@ -1,5 +1,12 @@
 Revision history for Perl extension Exporter::Simple.
 
+0.13  Fri Mar 15 22:42:16 CET 2002
+	- Incorporated two patches sent by Richard Clamp in response
+	  to bug reports by Mark Fowler (thanks guys). First, Makefile.PL
+	  now contains Filter::Simple in its PREREQ_PM, and it builds with
+	  a newer Attribute::Handler and Filter::Simple, which mess
+	  around with our import() sub.
+
 0.12  Tue Jul  3 13:07:30 CEST 2001
 	- Changed source filter to insert lexical-inspecting code
 	  at the end of the calling module

@@ -51,12 +51,12 @@ EOCODE
 });
 
 # unimport() can be clobbered, as we don't have a custom one.
-{
-    no warnings 'once';
-    *unimport = \*Filter::Simple::unimport;
+sub unimport {
+    &Filter::Simple::unimport;
+    &Attribute::Handlers::unimport;
 }
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 sub lexlookup {
 	# lookup a lexical reference to get the lexical's name
@@ -78,6 +78,7 @@ sub lexlookup {
 
 sub import {
 	my $pkg = (caller)[0];
+        return if $pkg eq __PACKAGE__;
 
 	# install an import routine in the calling package
 	# which will make a note of the symbols it is expected
@@ -245,7 +246,7 @@ sub handler {
 		our %export;
 		push @{ $export{begin}{$pkg}{EXPORT} } => $ref
 		    if $attr eq 'Exported';
-	};
+        }
 	return if $symbol eq 'LEXICAL';   # BEGIN or CHECK
 
 	# during CHECK, the symbol names are given as well (no longer
@@ -285,7 +286,7 @@ INIT {
 	for my $pkg (keys %{ $export{init} }) {
 		my $def = $export{init}{$pkg};
 		my $deftags = $def->{EXPORT_TAGS};
-		@{"${pkg}::EXPORT"} = @{ $def->{EXPORT} };
+                @{"${pkg}::EXPORT"} = @{ $def->{EXPORT} || [] };
 		%{"${pkg}::EXPORT_TAGS"} = %$deftags;
 		@{"${pkg}::EXPORT_OK"} = @{ $deftags->{all} || [] };
 		Exporter::import($pkg,
@@ -439,15 +440,16 @@ If you find any bugs or oddities, please do inform the author.
 
 =head1 AUTHOR
 
-Marcel Grunauer, <marcel@codewerk.com>
+Marcel GrE<uuml>nauer <marcel.gruenauer@chello.at>
 
 =head1 CONTRIBUTORS
 
 Damian Conway <damian@conway.org>
+Richard Clamp <richardc@unixbeard.net>
 
 =head1 COPYRIGHT
 
-Copyright 2001 Marcel Grunauer. All rights reserved.
+Copyright 2001-2002 Marcel GrE<uuml>nauer. All rights reserved.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

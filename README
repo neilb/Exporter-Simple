@@ -112,13 +112,13 @@ BUGS
     If you find any bugs or oddities, please do inform the author.
 
 AUTHOR
-    Marcel Grunauer, <marcel@codewerk.com>
+    Marcel Grünauer <marcel.gruenauer@chello.at>
 
 CONTRIBUTORS
-    Damian Conway <damian@conway.org>
+    Damian Conway <damian@conway.org> Richard Clamp <richardc@unixbeard.net>
 
 COPYRIGHT
-    Copyright 2001 Marcel Grunauer. All rights reserved.
+    Copyright 2001-2002 Marcel Grünauer. All rights reserved.
 
     This library is free software; you can redistribute it and/or modify it
     under the same terms as Perl itself.
